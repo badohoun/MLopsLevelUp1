@@ -39,3 +39,8 @@ def ingest_data() -> DataFrame:
         raise e
 
 
+if __name__ == "__main__":
+
+    # Load and preprocess data
+    data_frame = ingest_data()
+    print(data_frame.head())
