@@ -1,11 +1,13 @@
 import logging
 from pathlib import Path
 
-from pandas import read_csv , DataFrame
+from pandas import read_csv, DataFrame
 
 
 HOME_DIR = str(Path(__file__).home())
-OLIST_CUSTOMERS_DATASET_FPATH = HOME_DIR +  "/dataproduct/MLopsLevelUp1/src/customersatisfaction/Data/olist_customers_dataset.csv"
+OLIST_CUSTOMERS_DATASET_FPATH = (
+    HOME_DIR + "/dataproduct/MLopsLevelUp1/src/customersatisfaction/Data/olist_customers_dataset.csv"
+)
 
 
 class IngestData:
@@ -20,7 +22,6 @@ class IngestData:
     def get_data(self) -> DataFrame:
         df = read_csv(OLIST_CUSTOMERS_DATASET_FPATH)
         return df
-
 
 
 def ingest_data() -> DataFrame:
@@ -38,9 +39,3 @@ def ingest_data() -> DataFrame:
         logging.error(e)
         raise e
 
-
-if __name__ == "__main__":
-
-    # Load and preprocess data
-    data_frame = ingest_data()
-    print(data_frame.head())
