@@ -4,10 +4,9 @@ from pathlib import Path
 from pandas import read_csv, DataFrame
 
 
-OLIST_CUSTOMERS_DATASET_FPATH = (
-  "/home/obs/dataproduct/MLopsLevelUp1/src/customersatisfaction/Data/olist_customers_dataset.csv"
-)
+THIS_DIR = Path(__file__).parent
 
+OLIST_CUSTOMERS_CSV_FPATH = THIS_DIR /  "../Data/olist_customers_dataset.csv"
 
 class IngestData:
     """
@@ -19,7 +18,7 @@ class IngestData:
         pass
 
     def get_data(self) -> DataFrame:
-        df = read_csv(OLIST_CUSTOMERS_DATASET_FPATH)
+        df = read_csv(OLIST_CUSTOMERS_CSV_FPATH)
         return df
 
 
