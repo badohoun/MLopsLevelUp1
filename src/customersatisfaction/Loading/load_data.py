@@ -4,9 +4,8 @@ from pathlib import Path
 from pandas import read_csv, DataFrame
 
 
-HOME_DIR = str(Path(__file__).home())
 OLIST_CUSTOMERS_DATASET_FPATH = (
-    HOME_DIR + "/dataproduct/MLopsLevelUp1/src/customersatisfaction/Data/olist_customers_dataset.csv"
+  "/home/obs/dataproduct/MLopsLevelUp1/src/customersatisfaction/Data/olist_customers_dataset.csv"
 )
 
 
