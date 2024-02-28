@@ -10,7 +10,7 @@ on:
 
 jobs:
   check-version-txt:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
        - uses: actions/checkout@v3
          with:
@@ -20,7 +20,7 @@ jobs:
             git tag $(cat version.txt) 
 
   lint-format-and-static-code-checks:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
        - uses: actions/checkout@v3
        - name: Set up Python 3.10
@@ -45,7 +45,7 @@ jobs:
 
   build-wheel-and-sdist:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.10
@@ -73,7 +73,7 @@ jobs:
   execute-tests:
     needs:
       - build-wheel-and-sdist
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.10
@@ -101,7 +101,7 @@ jobs:
       - build-wheel-and-sdist
       - lint-format-and-static-code-checks
       - check-version-txt
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' 
     steps:
        - uses: actions/checkout@v3
@@ -139,7 +139,7 @@ jobs:
 
 # https://docs.github.com/en/actions/learn-github-actions/contexts#example-printing-context-information-to-the-log
   dump_contexts_to_log:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Dump GitHub context
         id: github_context_step
@@ -158,3 +158,4 @@ jobs:
         run: echo '${{ toJSON(secrets) }}'
       - name: Dump vars
         run: echo '${{ toJSON(vars) }}'
+        
