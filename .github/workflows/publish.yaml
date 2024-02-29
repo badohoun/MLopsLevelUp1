@@ -10,7 +10,7 @@ on:
 
 jobs:
   check-version-txt:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
        - uses: actions/checkout@v3
          with:
@@ -20,13 +20,13 @@ jobs:
             git tag $(cat version.txt) 
 
   lint-format-and-static-code-checks:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
        - uses: actions/checkout@v3
-       - name: Set up Python 3.8
+       - name: Set up Python 3.10.13
          uses: actions/setup-python@v3
          with:
-          python-version: 3.8
+          python-version: 3.10.13
        - uses: actions/cache@v3
          with:
             path: ~/.cache/pip
@@ -45,13 +45,13 @@ jobs:
 
   build-wheel-and-sdist:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python 3.8
+      - name: Set up Python 3.10.13
         uses: actions/setup-python@v3
         with:
-          python-version: 3.8
+          python-version: 3.10.13
       - uses: actions/cache@v3
         with:
           path: ~/.cache/pip
@@ -73,13 +73,13 @@ jobs:
   execute-tests:
     needs:
       - build-wheel-and-sdist
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python 3.8
+      - name: Set up Python 3.10.13
         uses: actions/setup-python@v3
         with:
-          python-version: 3.8
+          python-version: 3.10.13
       - name: Download wheel and sdist 
         uses: actions/download-artifact@v3
         with:
@@ -101,14 +101,14 @@ jobs:
       - build-wheel-and-sdist
       - lint-format-and-static-code-checks
       - check-version-txt
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' 
     steps:
        - uses: actions/checkout@v3
-       - name: Set up Python 3.8
+       - name: Set up Python 3.10.13
          uses: actions/setup-python@v3
          with:
-          python-version: 3.8
+          python-version: 3.10.13
        - uses: actions/cache@v3
          with:
             path: ~/.cache/pip
@@ -139,7 +139,7 @@ jobs:
 
 # https://docs.github.com/en/actions/learn-github-actions/contexts#example-printing-context-information-to-the-log
   dump_contexts_to_log:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Dump GitHub context
         id: github_context_step

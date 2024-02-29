@@ -1,15 +1,20 @@
 from logging import info
 import pytest
-from numpy import random 
+from numpy import random
 from xgboost import XGBRegressor
 from lightgbm import LGBMRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
-from customersatisfaction.Loading.load_data import  ingest_data
-from customersatisfaction.Preprocessing.cleaning_data import DataCleaning  , DataDivideStrategy , DataPreprocessStrategy
-from customersatisfaction.Modeling.modelsdevs import RandomForestModel , LightGBMModel, XGBoostModel,LinearRegressionModel , HyperparameterTuner
-from customersatisfaction.Modeling.evaluation import Evaluation , MSE, RMSE, R2Score
-
+from customersatisfaction.Loading.load_data import ingest_data
+from customersatisfaction.Preprocessing.cleaning_data import DataCleaning, DataDivideStrategy, DataPreprocessStrategy
+from customersatisfaction.Modeling.modelsdevs import (
+    RandomForestModel,
+    LightGBMModel,
+    XGBoostModel,
+    LinearRegressionModel,
+    HyperparameterTuner,
+)
+from customersatisfaction.Modeling.evaluation import Evaluation, MSE, RMSE, R2Score
 
 
 # MLS models metrics performance
@@ -21,21 +26,21 @@ def test_metrics():
         preprocessed_data = your_data_cleaner.handle_data()
         your_data_divider = DataCleaning(preprocessed_data, DataDivideStrategy())
         X_train, X_test, y_train, y_test = your_data_divider.handle_data()
-        # Model training 
+        # Model training
         random_forest_model = RandomForestModel()
         lightgbm_model = LightGBMModel()
         xgboost_model = XGBoostModel()
         linear_regression_model = LinearRegressionModel()
-        # Hyper parameter tuning 
+        # Hyper parameter tuning
         tuner_rf = HyperparameterTuner(random_forest_model, X_train, X_test, y_train, y_test)
         tuner_lgbm = HyperparameterTuner(lightgbm_model, X_train, X_test, y_train, y_test)
         tuner_xgb = HyperparameterTuner(xgboost_model, X_train, X_test, y_train, y_test)
         tuner_lr = HyperparameterTuner(linear_regression_model, X_train, X_test, y_train, y_test)
-        # Models  Loading  
-        rf_model = tuner_rf.model.train(x_train=X_train , y_train=y_train)
-        lgbm_model = tuner_lgbm.model.train(x_train=X_train , y_train=y_train)
-        xgb_model = tuner_xgb.model.train(x_train=X_train , y_train=y_train)
-        lr_model = tuner_lr.model.train(x_train=X_train , y_train=y_train)
+        # Models  Loading
+        rf_model = tuner_rf.model.train(x_train=X_train, y_train=y_train)
+        lgbm_model = tuner_lgbm.model.train(x_train=X_train, y_train=y_train)
+        xgb_model = tuner_xgb.model.train(x_train=X_train, y_train=y_train)
+        lr_model = tuner_lr.model.train(x_train=X_train, y_train=y_train)
         # Models Prediction
         y_pred_rf = rf_model.predict(X_test)
         y_pred_lgbm = lgbm_model.predict(X_test)
@@ -70,4 +75,3 @@ def test_metrics():
         info("Metrics Assertion test passed.")
     except Exception as e:
         pytest.fail(e)
-

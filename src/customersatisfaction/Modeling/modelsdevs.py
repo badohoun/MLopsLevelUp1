@@ -54,8 +54,11 @@ class RandomForestModel(Model):
         n_estimators = trial.suggest_int("n_estimators", 1, 200)
         max_depth = trial.suggest_int("max_depth", 1, 20)
         min_samples_split = trial.suggest_int("min_samples_split", 2, 20)
-        reg = self.train(x_train, y_train, n_estimators=n_estimators, max_depth=max_depth, min_samples_split=min_samples_split)
+        reg = self.train(
+            x_train, y_train, n_estimators=n_estimators, max_depth=max_depth, min_samples_split=min_samples_split
+        )
         return reg.score(x_test, y_test)
+
 
 class LightGBMModel(Model):
     """
@@ -108,6 +111,7 @@ class LinearRegressionModel(Model):
         reg = self.train(x_train, y_train)
         return reg.score(x_test, y_test)
 
+
 class HyperparameterTuner:
     """
     Class for performing hyperparameter tuning. It uses Model strategy to perform tuning.
@@ -122,5 +126,8 @@ class HyperparameterTuner:
 
     def optimize(self, n_trials=100):
         study = create_study(direction="maximize")
-        study.optimize(lambda trial: self.model.optimize(trial, self.x_train, self.y_train, self.x_test, self.y_test), n_trials=n_trials)
+        study.optimize(
+            lambda trial: self.model.optimize(trial, self.x_train, self.y_train, self.x_test, self.y_test),
+            n_trials=n_trials,
+        )
         return study.best_trial.params

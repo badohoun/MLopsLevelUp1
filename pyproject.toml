@@ -11,7 +11,7 @@ name = "customersatisfactionpackagedemo"
 authors = [{ name = "Espoir Badohoun", email = "some-email@gmail.com" }]
 description = "My package description"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.10"
 keywords = ["one", "two"]
 license = { text = "MIT" }
 classifiers = ["Programming Language :: Python :: 3"]
@@ -22,7 +22,7 @@ dependencies = [
     'lightgbm',
     'xgboost',
     'optuna',
-    'importlib-metadata; python_version<"3.8"',
+    'importlib-metadata; python_version<"3.10"',
 ]
 dynamic = ["version"]
 

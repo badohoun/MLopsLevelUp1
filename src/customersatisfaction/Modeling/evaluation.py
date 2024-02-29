@@ -1,7 +1,7 @@
-from logging import info , error
+from logging import info, error
 from abc import ABC, abstractmethod
 
-from numpy import  ndarray , sqrt 
+from numpy import ndarray, sqrt
 from sklearn.metrics import mean_squared_error, r2_score
 
 
@@ -9,6 +9,7 @@ class Evaluation(ABC):
     """
     Abstract Class defining the strategy for evaluating model performance
     """
+
     @abstractmethod
     def calculate_score(self, y_true: ndarray, y_pred: ndarray) -> float:
         pass
@@ -18,6 +19,7 @@ class MSE(Evaluation):
     """
     Evaluation strategy that uses Mean Squared Error (MSE)
     """
+
     def calculate_score(self, y_true: ndarray, y_pred: ndarray) -> float:
         """
         Args:
@@ -32,10 +34,7 @@ class MSE(Evaluation):
             info("The mean squared error value is: " + str(mse))
             return mse
         except Exception as e:
-            error(
-                "Exception occurred in calculate_score method of the MSE class. Exception message:  "
-                + str(e)
-            )
+            error("Exception occurred in calculate_score method of the MSE class. Exception message:  " + str(e))
             raise e
 
 
@@ -43,6 +42,7 @@ class R2Score(Evaluation):
     """
     Evaluation strategy that uses R2 Score
     """
+
     def calculate_score(self, y_true: ndarray, y_pred: ndarray) -> float:
         """
         Args:
@@ -57,10 +57,7 @@ class R2Score(Evaluation):
             info("The r2 score value is: " + str(r2))
             return r2
         except Exception as e:
-            error(
-                "Exception occurred in calculate_score method of the R2Score class. Exception message:  "
-                + str(e)
-            )
+            error("Exception occurred in calculate_score method of the R2Score class. Exception message:  " + str(e))
             raise e
 
 
@@ -68,6 +65,7 @@ class RMSE(Evaluation):
     """
     Evaluation strategy that uses Root Mean Squared Error (RMSE)
     """
+
     def calculate_score(self, y_true: ndarray, y_pred: ndarray) -> float:
         """
         Args:
@@ -82,8 +80,5 @@ class RMSE(Evaluation):
             info("The root mean squared error value is: " + str(rmse))
             return rmse
         except Exception as e:
-            error(
-                "Exception occurred in calculate_score method of the RMSE class. Exception message:  "
-                + str(e)
-            )
+            error("Exception occurred in calculate_score method of the RMSE class. Exception message:  " + str(e))
             raise e
