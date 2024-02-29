@@ -1,18 +1,17 @@
 from pathlib import Path
-from logging import info 
+from logging import info
 from io import StringIO
 import pytest
-from pandas import read_csv 
-from customersatisfaction.Loading.load_data import  ingest_data
-
-
-
+from pandas import read_csv
+from customersatisfaction.Loading.load_data import ingest_data
 
 
 # Remplacez ceci par le chemin réel vers votre fichier CSV
 
 HOME_DIR = str(Path(__file__).home())
-OLIST_CUSTOMERS_DATASET_FPATH = HOME_DIR +  "/dataproduct/MLopsLevelUp1/src/customersatisfaction/Data/olist_customers_dataset.csv"
+OLIST_CUSTOMERS_DATASET_FPATH = (
+    HOME_DIR + "/dataproduct/MLopsLevelUp1/src/customersatisfaction/Data/olist_customers_dataset.csv"
+)
 
 
 @pytest.fixture
@@ -25,6 +24,7 @@ e481f51cbdc54678b7cc49136f2d6af7,9ef432eb6251297304e76186b10a928d,delivered,2017
     """
     df = read_csv(StringIO(data))
     return df.head(2)
+
 
 def test_ingest_data_loads_data_correctly(sample_data):
     # Teste si la classe IngestData charge correctement les données
@@ -45,4 +45,3 @@ def test_data_types(column_name, expected_dtype):
     # Teste si les types de données des colonnes sont corrects
     sample_data = ingest_data()
     assert sample_data[column_name].dtype == expected_dtype
-

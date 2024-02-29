@@ -1,4 +1,5 @@
 from logging import info 
+from numpy import isnan
 import pytest
 from customersatisfaction.Loading.load_data import  ingest_data
 from customersatisfaction.Preprocessing.cleaning_data import DataCleaning  , DataDivideStrategy , DataPreprocessStrategy
@@ -6,6 +7,7 @@ from customersatisfaction.Modeling.modelsdevs import RandomForestModel , LightGB
 
 
 # Test pour la classe HyperparameterTuner
+@pytest.mark.slow
 def test_hyperparameter_tuner():
     try:
         data_frame = ingest_data()
@@ -13,6 +15,11 @@ def test_hyperparameter_tuner():
         preprocessed_data = your_data_cleaner.handle_data()
         your_data_divider = DataCleaning(preprocessed_data, DataDivideStrategy())
         X_train, X_test, y_train, y_test = your_data_divider.handle_data()
+        # Check for NaN values in the input data using Pandas functions
+        assert not X_train.isna().any().any(),"There is na inside."
+        assert not X_test.isna().any().any(),"There is na inside."
+        assert not y_train.isna().any().any(),"There is na inside."
+        assert not y_train.isna().any().any(),"There is na inside."
         # Test pour RandomForestModel
         tuner_rf = HyperparameterTuner(RandomForestModel(), X_train, y_train, X_test, y_test)
         best_params_rf = tuner_rf.optimize(n_trials=1)
@@ -31,4 +38,4 @@ def test_hyperparameter_tuner():
         assert isinstance(best_params_lr, dict)
         info("models and phyperparameter devs Assertion test passed.")
     except Exception as e:
-        pytest.fail(e)
+        pytest.fail(f"Test failed due to an exception: {e}")

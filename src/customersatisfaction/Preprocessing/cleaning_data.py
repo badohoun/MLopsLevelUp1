@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from typing import Union
 
 import numpy as np
-from pandas import DataFrame , Series
+from pandas import DataFrame, Series
 from sklearn.model_selection import train_test_split
 import warnings
 
@@ -41,12 +41,15 @@ class DataPreprocessStrategy(DataStrategy):
                 ],
                 axis=1,
             )
-            data["product_weight_g"] = data["product_weight_g"].fillna(data["product_weight_g"].median())
-            data["product_length_cm"] = data["product_length_cm"].fillna(data["product_length_cm"].median())
-            data["product_height_cm"] = data["product_height_cm"].fillna(data["product_height_cm"].median())
-            data["product_width_cm"] = data["product_width_cm"].fillna(data["product_width_cm"].median())
-            # write "No review" in review_comment_message column
-            data["review_comment_message"] = data["review_comment_message"].fillna("No review")
+            fill_values = {
+                 "product_weight_g": data["product_weight_g"].median(),
+                 "product_length_cm": data["product_length_cm"].median(),
+                 "product_height_cm": data["product_height_cm"].median(),
+                 "product_width_cm": data["product_width_cm"].median(),
+                 "review_comment_message": "No review"
+                 }
+            data.fillna(value=fill_values, inplace=True)
+
             data = data.select_dtypes(include=[np.number])
             cols_to_drop = ["customer_zip_code_prefix", "order_item_id"]
             data = data.drop(cols_to_drop, axis=1)
@@ -69,9 +72,7 @@ class DataDivideStrategy(DataStrategy):
         try:
             X = data.drop("review_score", axis=1)
             y = data["review_score"]
-            X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=0.2, random_state=42
-            )
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
             return X_train, X_test, y_train, y_test
         except Exception as e:
             logging.error(e)
@@ -91,6 +92,3 @@ class DataCleaning:
     def handle_data(self) -> Union[DataFrame, Series]:
         """Handle data based on the provided strategy"""
         return self.strategy.handle_data(self.df)
-
-
-
