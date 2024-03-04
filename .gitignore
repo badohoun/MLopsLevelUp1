@@ -6,3 +6,4 @@ dist
 .mypy_cache
 *env
 *.env
+.python-version

@@ -1,10 +1,6 @@
 from logging import info
 import pytest
 from numpy import random
-from xgboost import XGBRegressor
-from lightgbm import LGBMRegressor
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.linear_model import LinearRegression
 from customersatisfaction.Loading.load_data import ingest_data
 from customersatisfaction.Preprocessing.cleaning_data import DataCleaning, DataDivideStrategy, DataPreprocessStrategy
 from customersatisfaction.Modeling.modelsdevs import (
@@ -13,10 +9,18 @@ from customersatisfaction.Modeling.modelsdevs import (
     XGBoostModel,
     LinearRegressionModel,
     HyperparameterTuner,
+    remote_server_uri,
+    exp_name
+
 )
 from customersatisfaction.Modeling.evaluation import Evaluation, MSE, RMSE, R2Score
+import mlflow.sklearn 
+from mlflow.tracking import MlflowClient
+mlflow.set_tracking_uri(remote_server_uri)
+print(mlflow.tracking.get_tracking_uri)
+mlflow.set_experiment(exp_name)
 
-
+mlflow_client = MlflowClient()
 # MLS models metrics performance
 @pytest.mark.slow
 def test_metrics():

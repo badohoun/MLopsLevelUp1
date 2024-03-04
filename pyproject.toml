@@ -22,6 +22,7 @@ dependencies = [
     'lightgbm',
     'xgboost',
     'optuna',
+    'mlflow',
     'importlib-metadata; python_version<"3.10"',
 ]
 dynamic = ["version"]
