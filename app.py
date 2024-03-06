@@ -13,15 +13,15 @@ from customersatisfaction.Modeling.modelspredicts import load_artifacts
 
 
 
-app = Flask(__name__)
+my_flask_app = Flask(__name__)
 
 
 
-@app.route('/', methods=['GET'])
+@my_flask_app.route('/', methods=['GET'])
 def route_home():
     return "OK !", 200
 
-@app.route('/predict', methods=['POST'])
+@my_flask_app.route('/predict', methods=['POST'])
 def route_predict():
     try:
         body = request.get_json()
@@ -40,4 +40,4 @@ def route_predict():
 
 
 if __name__ == "__main__":
-    app.run(port=7000)
+    my_flask_app.run(port=7000)
